@@ -165,3 +165,4 @@ flutter build ios
 ---
 
 Desenvolvido como estudo prático de arquitetura Flutter, consumo de API REST, persistência local, gerenciamento de estado e design adaptativo.
+# newsflow
