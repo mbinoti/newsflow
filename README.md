@@ -4,6 +4,12 @@ Aplicativo mobile de notícias desenvolvido em Flutter, com uma experiência rea
 
 > O objetivo deste projeto foi ir além de uma simples tela consumindo uma API. A implementação separa apresentação, domínio e acesso a dados, trata estados assíncronos e falhas de rede, preserva o estado de navegação e mantém uma interface coerente com cada plataforma.
 
+## Demonstração
+
+<p align="center">
+  <img src="docs/assets/newsflow-demo.gif" alt="Demonstração do NewsFlow" width="320">
+</p>
+
 ## Principais recursos
 
 - Manchetes por país e por sete categorias: geral, negócios, entretenimento, saúde, ciência, esportes e tecnologia.

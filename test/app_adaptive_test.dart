@@ -16,7 +16,17 @@ class _FakeNewsRepository implements NewsRepository {
     required String country,
     required String category,
     required int page,
-  }) async => const NewsPage(articles: [], totalResults: 0);
+  }) async => NewsPage(
+    articles: [
+      Article(
+        sourceName: 'Fonte de teste',
+        title: 'Notícia em destaque',
+        url: 'https://example.com/noticia',
+        publishedAt: DateTime(2026),
+      ),
+    ],
+    totalResults: 1,
+  );
 
   @override
   Future<NewsPage> search({required String query, required int page}) async =>
@@ -49,7 +59,7 @@ void main() {
     await tester.pump();
 
     expect(find.byType(CupertinoApp), findsOneWidget);
-    expect(find.byType(CupertinoTabScaffold), findsOneWidget);
+    expect(find.byType(CupertinoTabScaffold), findsNothing);
     expect(find.byType(CupertinoTabBar), findsOneWidget);
     expect(find.byType(CupertinoPageScaffold), findsWidgets);
     expect(find.byType(MaterialApp), findsNothing);
@@ -65,5 +75,21 @@ void main() {
     expect(find.byType(Scaffold), findsWidgets);
     expect(find.byType(NavigationBar), findsOneWidget);
     expect(find.byType(CupertinoTabScaffold), findsNothing);
+  });
+
+  testWidgets('mantém as notícias ao voltar de Ajustes no iOS', (tester) async {
+    await tester.pumpWidget(await appFor(TargetPlatform.iOS));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Notícia em destaque'), findsOneWidget);
+
+    await tester.tap(find.text('Ajustes'));
+    await tester.pumpAndSettle();
+    expect(find.text('País padrão'), findsOneWidget);
+
+    await tester.tap(find.text('Início'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Notícia em destaque'), findsOneWidget);
   });
 }

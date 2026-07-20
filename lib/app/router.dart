@@ -58,79 +58,58 @@ GoRouter createRouter() => GoRouter(
   ],
 );
 
-class AdaptiveNavigationShell extends StatefulWidget {
+class AdaptiveNavigationShell extends StatelessWidget {
   const AdaptiveNavigationShell({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
-  @override
-  State<AdaptiveNavigationShell> createState() =>
-      _AdaptiveNavigationShellState();
-}
-
-class _AdaptiveNavigationShellState extends State<AdaptiveNavigationShell> {
-  late final CupertinoTabController _tabController = CupertinoTabController(
-    initialIndex: widget.navigationShell.currentIndex,
-  );
-
   void _select(int index) {
-    widget.navigationShell.goBranch(
+    navigationShell.goBranch(
       index,
-      initialLocation: index == widget.navigationShell.currentIndex,
+      initialLocation: index == navigationShell.currentIndex,
     );
-  }
-
-  @override
-  void didUpdateWidget(covariant AdaptiveNavigationShell oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (_tabController.index != widget.navigationShell.currentIndex) {
-      _tabController.index = widget.navigationShell.currentIndex;
-    }
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     if (isCupertinoPlatform(context)) {
-      return CupertinoTabScaffold(
-        controller: _tabController,
-        tabBar: CupertinoTabBar(
-          currentIndex: widget.navigationShell.currentIndex,
-          onTap: _select,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.house),
-              activeIcon: Icon(CupertinoIcons.house_fill),
-              label: 'Início',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.search),
-              label: 'Pesquisa',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.bookmark),
-              activeIcon: Icon(CupertinoIcons.bookmark_fill),
-              label: 'Favoritos',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.settings),
-              activeIcon: Icon(CupertinoIcons.settings_solid),
-              label: 'Ajustes',
+      return CupertinoPageScaffold(
+        child: Column(
+          children: [
+            Expanded(child: navigationShell),
+            CupertinoTabBar(
+              currentIndex: navigationShell.currentIndex,
+              onTap: _select,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.house),
+                  activeIcon: Icon(CupertinoIcons.house_fill),
+                  label: 'Início',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.search),
+                  label: 'Pesquisa',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.bookmark),
+                  activeIcon: Icon(CupertinoIcons.bookmark_fill),
+                  label: 'Favoritos',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(CupertinoIcons.settings),
+                  activeIcon: Icon(CupertinoIcons.settings_solid),
+                  label: 'Ajustes',
+                ),
+              ],
             ),
           ],
         ),
-        tabBuilder: (_, _) => widget.navigationShell,
       );
     }
     return Scaffold(
-      body: widget.navigationShell,
+      body: navigationShell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: widget.navigationShell.currentIndex,
+        selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: _select,
         destinations: const [
           NavigationDestination(
