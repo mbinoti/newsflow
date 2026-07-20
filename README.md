@@ -7,7 +7,7 @@ Aplicativo mobile de notícias desenvolvido em Flutter, com uma experiência rea
 ## Demonstração
 
 <p align="center">
-  <img src="docs/assets/newsflow-demo.gif" alt="Demonstração do NewsFlow" width="320">
+  <img src="docs/assets/demo-newsflow.gif" alt="Demonstração do NewsFlow" width="320">
 </p>
 
 ## Principais recursos
